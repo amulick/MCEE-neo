@@ -106,12 +106,13 @@ f.e1 <- function(PARA=1, STUD=my.stud, DEAT=my.deat, VDT=my.vdt,
     assign("my.iter", ITER, envir=.GlobalEnv)
     assign("my.burn", BURN, envir=.GlobalEnv)
     assign("my.thin", THIN, envir=.GlobalEnv)
+    assign("my.modl", MODL, envir=.GlobalEnv)
     jm.r1 <- jags.parallel(data=jd.r1, parameters.to.save=jp.r1, 
-                           inits=ji.r1, model.file=paste(MODL), 
+                           inits=ji.r1, model.file=paste(my.modl), 
                            jags.seed = SEED, n.chains=CHAS, 
                            n.iter=my.iter, n.burnin=my.burn, 
                            n.thin=my.thin, 
-                           export_obj_names=c("my.iter","my.burn","my.thin")) # Parallel chains
+                           export_obj_names=c("my.iter","my.burn","my.thin","my.modl")) # Parallel chains
   }
   if(PARA==0){
     set.seed(SEED)
