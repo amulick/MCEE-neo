@@ -1,0 +1,39 @@
+
+  model{
+    for (s in 1:S){   # loop through studies
+    
+      ## Define model for each TRUE cause of death
+      # C number of TRUE causes of death
+      # q is log(odds) for each cause: log(Pi/P1) where i = 1...C 
+      q[s,1] <- 1
+      for(d in 2:C){
+        log(q[s,d]) <- inprod(XM[s,1:K],B[1:K,d]) + re[rG[s],d]
+      }
+      pi[s,1:C] <- q[s,1:C] / sum(q[s,1:C]) 
+      
+      ## Estimated proportions per REPORTED category
+      P[fi[s]:la[s]] <- GM[fi[s]:la[s], 1:C] %*% pi[s,]  
+
+      ## Multinomial model of observed numbers in reported categories from expected proportions
+      GM[fi[s]:la[s], C+1] ~ dmultinom(P[fi[s]:la[s]], N[s])
+    }
+    
+    # Define priors
+    for(c in 2:C){
+      # for the random effects
+      for(r in 1:rN){
+        re[r,c] ~ dnorm(0,  1/(sd[c]^2))
+      }
+      sd[c] ~ dunif(0, rsdlim)
+      # For the fixed effects (outside of LASSO)
+	#intercept & period variables (note period variable location is HARD CODED, must be first in vxf vector)
+	B[1,c] ~  dnorm(0, 1/0.5^2)     
+	B[2,c] ~  dnorm(0, 1/0.5^2)
+   
+	B[3,c] ~  dnorm(0, 1/0.5^2)
+      # For the fixed effects (Lapplace, inside LASSO)
+     for(x in 4:K){
+        B[x,c] ~ ddexp(0,lambda)
+      }
+    }
+  }
