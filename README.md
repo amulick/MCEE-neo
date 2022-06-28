@@ -1,6 +1,6 @@
 # A Bayesian hierarchical model with integrated covariate selection and misclassification matrices to estimate neonatal causes of death
 
-Code and functions for paper by Amy MULICK, Shefali OZA, David PRIETO-MERINO, Francisco VILLAVICENCIO, Simon COUSENS and Jamie PERIN, published at XXXX, 2021.
+Code and functions for paper by Amy MULICK, Shefali OZA, David PRIETO-MERINO, Francisco VILLAVICENCIO, Simon COUSENS and Jamie PERIN, published at the _Journal of the Royal Statistical Society, Series A_, 24 June 2022. Full text available at: http://doi.org/10.1111/rssa.12853
 
 This repository contains the following files and folders:
 
